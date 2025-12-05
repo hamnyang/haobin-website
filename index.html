@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bnb archive:3</title>
+    <link rel="icon" href="favicon.png" type="image/png">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Starbim -->
+    <link href="https://fonts.cdnfonts.com/css/starbim" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(190deg, #ffffff, #fff7fd);
+            color: #333;
+            min-height: 100vh;
+        }
+        .starbim {
+            font-family: 'Starbim', sans-serif;
+            font-size: 4.5rem;
+            background: black;
+            background-clip: text;
+            -webkit-background-clip: text;        /* Safari/iOS */
+            color: transparent;
+            -webkit-text-fill-color: transparent; /* Safari/iOS */
+            display: inline-block;
+        }
+
+                .text-hao {                     /* HAO = pink */
+            color: #ff8acc !important;
+            -webkit-text-fill-color: #ff8acc !important;
+        }
+        .text-bin {                     /* BIN = blue */
+            color: #7fbfff !important;
+            -webkit-text-fill-color: #7fbfff !important;
+        }
+
+        .text-gradient {
+            background: black;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+                .navbar {
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+        }
+        .search-bar {
+            border: 1px solid #000000;
+            border-radius: 50px;
+            padding: 10px 20px;
+        }
+        .main-photo {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .main-photo:hover { transform: scale(1.02); }
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+        .thumbnail.active {
+            border: 3px solid #ff8acc;
+        }
+        .info-box, .about-box {
+            background: rgba(255,255,255,0.7);
+            border-radius: 20px;
+            padding: 20px;
+            min-height: 300px;
+        }
+        .chat-box {
+            background: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+        .chat-input-area {
+            padding: 15px;
+        }
+        .message {
+            margin: 8px 0;
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 80%;
+            align-self: flex-start;
+            background: #e9e9e9;
+        }
+        .message.own {
+            align-self: flex-end;
+            background: #ff8acc;
+            color: white;
+        }
+        footer {
+            background: #ebf6ff;
+            color: #888;
+        }
+
+        #usernameModal .modal-content {
+            border-radius: 20px;
+            background: linear-gradient(135deg, #fff4fb, #e6f0ff);
+        }
+        #usernameModal .btn-primary {
+            background: linear-gradient(45deg, #ff8acc, #7fbfff);
+            border: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="modal fade" id="usernameModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg">
+      <div class="modal-body text-center py-5">
+        <h2 class="starbim mb-4">HAOBIN ARCHIVE ✩</h2>
+        <p class="lead">Welcome, zerocola! ♡<br>Please enter your name to join the chat~</p>
+        <input type="text" id="usernameInput" class="form-control form-control-lg text-center mb-3" placeholder="your name here" maxlength="20">
+        <button class="btn btn-primary btn-lg px-5" id="saveUsername">Enter</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg py-4">
+    <div class="container">
+        <input type="text" class="form-control search-bar w-25" placeholder="Search">
+        <div class="mx-auto text-center">
+    <h1 class="starbim mb-0 d-inline">
+        <span class="text-hao">HAO</span><span class="text-bin">BIN</span> ARCHIVE
+    </h1>
+</div>
+        <div class="text-end">
+            <a href="#" class="text-dark text-decoration-none">Home / About / Archives</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container my-5">
+    <div class="row g-5 align-items-start">
+
+        <!-- Gallery Section -->
+        <div class="col-lg-8">
+            <div class="text-center position-relative">
+                <img src="present.jpg" alt="Present Haobin" class="main-photo" id="mainPhoto">
+                <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap" id="thumbnails">
+                    <!-- Thumbnails will be injected by JS -->
+                </div>
+                <p class="text-muted mt-3">(press each haobin era to expand the picture)</p>
+            </div>
+        </div>
+
+        <!-- Info Sidebar -->
+        <div class="col-lg-4">
+            <div class="info-box shadow-sm">
+                <h3>Info info idk</h3>
+                <p>idk what to add ♡</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="row my-5 g-5 align-items-center">
+        <div class="col-md-4">
+            <img src="bp.jpg" class="rounded-4 shadow w-100" alt="About">
+        </div>
+        <div class="col-md-8">
+            <h2 class="text-center mb-4 text-gradient">
+    <b>ABOUT THIS WEBSITE</b>
+</h2>
+            <div class="about-box shadow-sm">
+                <p>info</p>
+            </div>
+        </div>
+    </div>
+
+   <!-- Chat Section – text ON the photo, photo on the RIGHT (desktop) -->
+<div class="row my-5 align-items-center">
+    <div class="col-12">
+        <h2 class="text-center d-lg-none mb-4" style="color:#7fbfff; font-size:2.8rem;">
+            <span class="text-hao">Chat</span> <span class="text-bin">Here !</span>
+        </h2>
+
+        <div class="row align-items-center g-5 flex-lg-row-reverse"> <!-- reverse = photo on right -->
+            
+            <!-- Chat box (left on desktop) -->
+            <div class="col-lg-7">
+                <div class="chat-box shadow" style="height:420px;">
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="chat-input-area border-top">
+                        <div class="input-group">
+                            <input type="text" id="messageInput" class="form-control border-0" placeholder="send message..">
+                            <button class="btn btn-outline-secondary" id="sendBtn">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo with "Chat Here !" overlay (right on desktop) -->
+            <div class="col-lg-5 position-relative">
+                <img src="iconik2.jpg" 
+                     class="rounded-4 shadow w-100" 
+                     style="height:480px; object-fit:cover;" alt="Haobin">
+
+                <!-- Dark overlay + big text on the photo (hidden on mobile) -->
+                <div class="position-absolute top-0 start-0 w-100 h-100 rounded-4 d-none d-lg-block"
+                     style="background: rgba(0,0,0,0.35); pointer-events:none;"></div>
+                <div class="position-absolute top-50 start-50 translate-middle text-center d-none d-lg-block">
+                    <h2 style="font-size:4.2rem; text-shadow: 0 4px 15px rgba(0,0,0,0.6);">
+                        <span class="text-hao">Chat</span> <span class="text-bin">Here !</span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<footer class="text-center py-4">
+    <small>© Tokyuies 2025</small>
+</footer>
+
+<!-- Bootstrap + JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    let username = localStorage.getItem('haobinUsername') || '';
+
+    if (!username) {
+        const modal = new bootstrap.Modal(document.getElementById('usernameModal'));
+        modal.show();
+
+        document.getElementById('saveUsername').addEventListener('click', () => {
+            let name = document.getElementById('usernameInput').value.trim();
+            if (!name) name = 'Guest';
+            username = name;
+            localStorage.setItem('haobinUsername', username);
+            modal.hide();
+        });
+
+        document.getElementById('usernameInput').addEventListener('keypress', e => {
+            if (e.key === 'Enter') document.getElementById('saveUsername').click();
+        });
+    }
+
+    // ==== Gallery Data ====
+    const eras = [
+        { big: "present.jpg", thumb: "present.jpg" },
+        { big: "iconik.jpg", thumb: "iconik.jpg" },
+        { big: "blue.jpg", thumb: "blue.jpg" },
+        { big: "timeless.jpg", thumb: "timeless.jpg" },
+        { big: "gsb.jpg", thumb: "gsb.jpg" },
+        { big: "ftp.jpg", thumb: "ftp.jpg" },
+        { big: "crush.jpg", thumb: "crush.jpg" },
+        { big: "debut.jpg", thumb: "debut.jpg" }
+    ];
+
+    const mainPhoto = document.getElementById('mainPhoto');
+    const thumbnailsContainer = document.getElementById('thumbnails');
+
+    // Load thumbnails
+    eras.forEach((era, index) => {
+        const img = document.createElement('img');
+        img.src = era.thumb;
+        img.className = 'thumbnail';
+        img.dataset.index = index;
+        if (index === 0) img.classList.add('active');
+        img.addEventListener('click', () => switchPhoto(index));
+        thumbnailsContainer.appendChild(img);
+    });
+
+    function switchPhoto(index) {
+        // Swap main photo
+        const newBig = eras[index].big;
+        const oldBig = mainPhoto.src;
+
+        mainPhoto.src = newBig;
+
+        // Update active thumbnail
+        document.querySelectorAll('.thumbnail').forEach((t, i) => {
+            t.classList.toggle('active', i === index);
+        });
+
+    }
+
+    // ==== Chat Functionality ====
+    const chatMessages = document.getElementById('chatMessages');
+    const messageInput = document.getElementById('messageInput');
+
+    function sendMessage() {
+        const msg = messageInput.value.trim();
+        if (!msg || !username) return;
+
+        const div = document.createElement('div');
+        div.className = 'message own';
+        div.textContent = `${username}: ${msg}`;
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        messageInput.value = '';
+    }
+
+    document.getElementById('sendBtn').onclick = sendMessage;
+    messageInput.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
+    
+</script>
+
+<!-- Floating Music Button (bottom-right) -->
+<div class="position-fixed bottom-0 end-0 p-4" style="z-index:9999;">
+    <button id="musicBtn" class="btn rounded-circle shadow-lg d-flex align-items-center justify-content-center"
+            style="width:60px;height:60px;background:black;border:none;">
+        <span id="musicIcon" class="text-white fs-3">❚❚</span>
+    </button>
+</div>
+
+<!-- Hidden Audio -->
+<audio id="bgMusic" loop preload="auto">
+    <!-- PUT YOUR SONG LINK HERE -->
+    <source src="tcmac.fr - keshi - Soft Spot (Official Music Video) (320 KBps).mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    const music = document.getElementById('bgMusic');
+    const btn = document.getElementById('musicBtn');
+    const icon = document.getElementById('musicIcon');
+    let isPlaying = false;
+
+    // ←←←←← CHANGE THIS TO YOUR REAL SONG URL ↓↓↓↓↓
+    music.src = "tcmac.fr - keshi - Soft Spot (Official Music Video) (320 KBps).mp3";
+
+    btn.addEventListener('click', () => {
+        if (isPlaying) {
+            music.pause();
+            icon.textContent = '❚❚';
+            isPlaying = false;
+        } else {
+            music.play();
+            icon.textContent = '▶';
+            isPlaying = true;
+        }
+    });
+
+    // Auto-unlock audio on first user tap (required on mobile)
+    document.body.addEventListener('click', function unlockAudio() {
+        if (!isPlaying) {
+            music.play().then(() => {
+                icon.textContent = '▶';
+                isPlaying = true;
+            }).catch(() => {});
+        }
+        document.body.removeEventListener('click', unlockAudio);
+    });
+</script>
+</body>
+</html>
